@@ -11,18 +11,18 @@ namespace Prime
         static void Main(string[] args)
         {
             string s = Convert.ToString(Console.ReadLine());
-            string[] numbers = s.Split(' ');
+            string[] numbers = s.Split(' ');// we convert string s to array numbers splitting by space
             int size = numbers.Length;
             for (int i = 0; i < size; i++)
             {
-                CheckPrime(int.Parse(numbers[i]));
+                CheckPrime(int.Parse(numbers[i]));// we convert every part of string array numbers[] to integer number
             }
 
         }
-        static void CheckPrime(int n)
+        static void CheckPrime(int n) // checks every number from numbers[] and prints prime numbers in console
         {
             bool ok = true;
-            if (n <= 1)
+            if (n <= 1) // 1 is not prime number
             {
                 ok = false;
             }
@@ -38,9 +38,9 @@ namespace Prime
                 }
             }
 
-            if (ok == true)
+            if (ok == true) 
             {
-                Console.WriteLine(n);
+                Console.WriteLine(n);// If number is prime this method prints this number in console
             }
 
         }
