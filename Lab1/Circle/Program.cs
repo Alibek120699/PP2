@@ -37,7 +37,7 @@ namespace Circle
         {
             Console.WriteLine("Enter the radius of circle: ");
             Circle x = new Circle();
-            x.ReadInf();//takes value of radius from class Circle and prints it in console
+            x.ReadInf();//takes value of radius from console and sends it to class Circle
             x.FindDiameter();// takes value of diameter from class Circle and prints it in console
             x.FindArea();// takes value of area from class Circle and prints it in console
             x.FindCircumference();// takes value of circumference from class Circle and prints it in console

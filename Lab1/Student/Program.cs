@@ -7,21 +7,21 @@ using System.Threading.Tasks;
 namespace Student
 {
 
-    class Student
+    class Student// we create class Student with parametres name, surname and gpa
     {
         string name;
         string surname;
         double gpa;
         
 
-        public void ReadInf()
+        public void ReadInf()//reads name, surname, gpa  and makes them visible to other classes
         {
             name = Convert.ToString(Console.ReadLine());
             surname = Convert.ToString(Console.ReadLine());
             gpa = double.Parse(Console.ReadLine().Replace(".", ","));
         }
 
-        public void PrintInf()
+        public void PrintInf()//takes name, surname, gpa from console and prints them in console in one line 
         {
             Console.WriteLine(name + " " + surname + " " + gpa);
         }
@@ -32,8 +32,8 @@ namespace Student
         static void Main(string[] args)
         {
             Student x = new Student();
-            x.ReadInf();
-            x.PrintInf();
+            x.ReadInf();//reads name, surname, gpa from console and sends them to class Student
+            x.PrintInf();// takes name, surname, gpa and prints them in console in one line
         }
     }
 }
