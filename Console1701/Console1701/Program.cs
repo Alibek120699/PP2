@@ -74,6 +74,9 @@ namespace Console1701
                     case ConsoleKey.Escape:
                         quit = true;
                         break;
+                    case ConsoleKey.Backspace:
+                        quit = true;
+                        break;
                     default:
                         break;
 
