@@ -32,14 +32,13 @@ namespace PrimeNumbers
         }
         static void Main(string[] args)
         {
-            string s = Console.ReadLine();
-            string[] numbers = s.Split(' ');
-            for(int i = 0; i < numbers.Length; i++)
+            
+            for(int i = 0; i < args.Length; i++)
             {
-                if (CheckPrime(int.Parse(numbers[i])) == true)
+                if (CheckPrime(int.Parse(args[i])) == true)
                 {
                     //Console.Write(numbers[i] + " ");
-                    Console.WriteLine(numbers[i]);
+                    Console.WriteLine(args[i]);
                 }
             }
         }

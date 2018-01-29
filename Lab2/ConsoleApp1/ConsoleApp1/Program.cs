@@ -40,7 +40,7 @@ namespace ConsoleApp1
             
             string path = @"C:\Users\HP\Desktop\PP2\Lab2\input.txt";
             string lines = File.ReadAllText(path);
-            string[] numbers = lines.Split(' ');
+            string[] numbers = lines.Split(' ','\n', '\t');
             int min = 1000;
             int max = 1;
             List<int> primes = new List<int>();
