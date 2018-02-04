@@ -22,14 +22,16 @@ namespace Lab2
         }
         public static int Lcm(int a, int b)
         {
-            int max = Math.Max(a, b);
-            for(int i=max; ; i++)
+            int max = Math.Max(a,b);
+            for(int i = max; i < a * b; i++)
             {
-                if(i%a==0 && i % b == 0)
+                if (i % a == 0 && i % b == 0)
                 {
                     max = i;
                     break;
                 }
+                else
+                    max = a * b;
             }
             return max;
         }
@@ -65,8 +67,8 @@ namespace Lab2
         }
         public static Complex operator +(Complex x, Complex y)
         {
-            int lcm = Lcm(x.b, y.b);
-            Complex result3 = new Complex((lcm / x.b) * x.a + (lcm / y.b) * y.a, lcm);
+            int lcm = (Lcm(x.b, y.b) / x.b) * x.a + (Lcm(x.b, y.b) / y.b) * y.a;
+            Complex result3 = new Complex(lcm, Lcm(x.b, y.b));
             result3.Simplify();
             if (result3.b < 0)
             {
@@ -77,8 +79,8 @@ namespace Lab2
         }
         public static Complex operator -(Complex x, Complex y)
         {
-            int lcm = Lcm(x.b, y.b);
-            Complex result4 = new Complex((lcm / x.b) * x.a - (lcm / y.b) * y.a, lcm);
+            int lcm = (Lcm(x.b, y.b)/x.b)*x.a-(Lcm(x.b,y.b)/y.b)*y.a;
+            Complex result4 = new Complex(lcm, Lcm(x.b,y.b));
             result4.Simplify();
             if (result4.b < 0)
             {
@@ -86,7 +88,9 @@ namespace Lab2
                 result4.a = result4.a * (-1);
             }
             return result4;
-        }public override string ToString()
+        }
+
+        public override string ToString()
         {
             return a + "/" + b;
         }
