@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Net.Sockets;
 
 namespace ConsoleApp1
 {
@@ -38,7 +39,8 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             
-            string path = @"C:\Users\HP\Desktop\PP2\Lab2\input.txt";
+            string path = @"C:\Users\HP\Desktop\PP2\Lab2\ConsoleApp1\ConsoleApp1\input.txt";
+            //StreamReader sr = new StreamReader(@"C: \Users\HP\Desktop\PP2\Lab2\input.");
             string lines = File.ReadAllText(path);
             string[] numbers = lines.Split(' ','\n', '\t');
             int min = 1000;
@@ -62,11 +64,11 @@ namespace ConsoleApp1
                     min = primes[i];
                 }
             }
-            Console.WriteLine("min: " + min);
-            Console.WriteLine("max: " + max);
+            //Console.WriteLine("min: " + min);
+            //Console.WriteLine("max: " + max);
             string[] mins = { "min prime: " + Convert.ToString(min)," ", "max prime: " + Convert.ToString(max) };
             
-            File.WriteAllLines(@"C:\Users\HP\Desktop\PP2\Lab2\output.txt", mins);
+            File.WriteAllLines(@"C:\Users\HP\Desktop\PP2\Lab2\ConsoleApp1\ConsoleApp1\TextFile1.txt", mins);
             
         }
     }

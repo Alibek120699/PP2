@@ -1,0 +1,3 @@
+min prime: 2
+ 
+max prime: 79
