@@ -5,30 +5,29 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace Snake
+namespace SnakeSer
 {
-    public class Wall : GameObject
+    public class Wall: GameObject
     {
-        public Wall(Point firstPoint, ConsoleColor color, char sign) : base(firstPoint, color, sign)
+        public Wall(Point head, char sign, ConsoleColor color) : base(head, sign, color)
         {
 
         }
 
-        
-        public void LoadLevel(GameLevel level)
+        public void LoadLevel(GameLevel gamelevel)
         {
             string fname = "";
 
-            switch (level)
+            switch (gamelevel)
             {
                 case GameLevel.First:
-                    fname = @"TextFile1.txt";
+                    fname = @"level1.txt";
                     break;
                 case GameLevel.Second:
-                    fname = @"TextFile2.txt";
+                    fname = @"level2.txt";
                     break;
-                case GameLevel.Bonus:
-                    fname = @"TextFile3.txt";
+                case GameLevel.Third:
+                    fname = @"level3.txt";
                     break;
                 default:
                     break;
@@ -53,6 +52,16 @@ namespace Snake
 
             sr.Close();
             fs.Close();
+        }
+
+        public void Draw()
+        {
+            Console.ForegroundColor = color;
+            foreach(Point p in body)
+            {
+                Console.SetCursorPosition(p.X, p.Y);
+                Console.Write(sign);
+            }
         }
     }
 }

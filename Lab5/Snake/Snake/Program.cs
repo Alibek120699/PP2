@@ -16,8 +16,8 @@ namespace Snake
 
             while (game.isAlive)
             {
+
                 game.Draw();
-                
                 game.Process();
             }
         }

@@ -8,18 +8,58 @@ namespace SnakeSer
 {
     public abstract class GameObject
     {
-        public List<Point> body;
-        public char sign;
-        public ConsoleColor color;
+        public List<Point> body { get; set; }
+        public char sign { get; }
+        public ConsoleColor color { get; }
 
-        public GameObject(List<Point> body, char sign, ConsoleColor color)
+        public GameObject(Point head, char sign, ConsoleColor color)
+        {
+            this.body = new List<Point>();
+            if (head != null)
+            {
+                this.body.Add(head);
+            }
+            this.sign = sign;
+            this.color = color;
+        }
+
+       
+
+
+
+        public void Draw()
+        {
+            
+            Clear();
+            Console.ForegroundColor = this.color;
+            foreach (Point p in body)
+            {
+                Console.SetCursorPosition(p.X, p.Y);
+                Console.Write(this.sign);
+                
+            }
+        }
+        public void ClearPoint(Point p)
+        {
+            Console.SetCursorPosition(p.X, p.Y);
+            Console.Write(' ');
+        }
+        public void Save()
         {
 
         }
 
-        public bool IsBelong()
+        public void Clear()
         {
-            return false;
+            Console.ForegroundColor = ConsoleColor.Black;
+            foreach (Point p in body)
+            {
+                Console.SetCursorPosition(p.X, p.Y);
+                Console.Write(sign);
+            }
         }
+
     }
+
 }
+

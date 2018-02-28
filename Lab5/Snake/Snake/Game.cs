@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Snake
 {
-    enum GameLevel
+    public enum GameLevel
     {
         First,
         Second,
@@ -20,14 +20,13 @@ namespace Snake
 
         bool[,] field = new bool[10, 10];
 
-        Worm worm;
-        Food food;
-        Wall wall;
+        public Worm worm;
+        public Food food;
+        public Wall wall;
         public bool isAlive;
 
         GameLevel gameLevel;
-
-        List<GameObject> g_objects = new List<GameObject>();
+        
         public int count = 0;
         public void SetupBoard()
         {
@@ -48,22 +47,14 @@ namespace Snake
             wall = new Wall(null, ConsoleColor.Cyan, '#');
 
             wall.LoadLevel(GameLevel.First);
-
-            g_objects.Add(worm);
-            g_objects.Add(food);
-            g_objects.Add(wall);
+            
         }
 
         public void Draw()
         {
-            
-            foreach (GameObject g in g_objects)
-            {
-                g.Draw();
-            }
-            //Console.WriteLine("               Score:");
-        }
 
+        }
+       
         public void Exit()
         {
 
