@@ -56,12 +56,12 @@ namespace Snake
 
         public void Draw()
         {
-            Console.Clear();
+            
             foreach (GameObject g in g_objects)
             {
                 g.Draw();
             }
-            Console.WriteLine("               Score:");
+            //Console.WriteLine("               Score:");
         }
 
         public void Exit()
@@ -74,8 +74,9 @@ namespace Snake
 
         }
 
-        public void Process(ConsoleKeyInfo pressedButton)
+        public void Process()
         {
+            ConsoleKeyInfo pressedButton = Console.ReadKey();
             switch (pressedButton.Key)
             {
                 case ConsoleKey.UpArrow:
@@ -98,9 +99,21 @@ namespace Snake
             {
                 worm.body.Add(new Point { X = food.body[0].X, Y = food.body[0].Y });
                 count++;
+                if (count==3)
+                {
+                    wall.Clear();
+                    worm.Clear();
+                    worm.body.Clear();
+                    wall.LoadLevel(gameLevel);
+                    wall.Draw();
+                    gameLevel++;
+                    count = 0;
+                }
                 Random rx = new Random();
-                Random ry = new Random();
-                Point xy = new Point { X=rx, Y=ry}
+                while(wall.IsPointBelong(food.body[0]) || worm.IsPointBelong(food.body[0]))
+                {
+                    food.body[0] = new Point { X=rx.Next(1,30), Y=rx.Next(1,30) };
+                }
 
                 
                 
@@ -117,6 +130,16 @@ namespace Snake
                         break;
                     }
                 }
+                for(int i=1; i<worm.body.Count; i++)
+                {
+                    if (worm.body[i].Equals(worm.body[0]))
+                    {
+                        Console.Clear();
+                        Console.WriteLine("GAME OVER!!!");
+                        isAlive = false;
+                        break;
+                    }
+                }           
             }
         }
     }

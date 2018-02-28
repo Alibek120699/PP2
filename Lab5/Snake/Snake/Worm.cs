@@ -17,13 +17,23 @@ namespace Snake
         {
             Point newHeadPos = new Point { X = body[0].X + dx, Y = body[0].Y + dy };
 
-            for (int i = body.Count - 1; i > 0; --i)
+            Point last = body[body.Count - 1];
+
+            for (int i = body.Count - 1; i > 1; --i)
             {
                 body[i].X = body[i - 1].X;
                 body[i].Y = body[i - 1].Y;
+
+             
+                Console.SetCursorPosition(last.X, last.Y);
+                //Clear();
+                Console.Write(' ');
             }
+            //last = new Point { X = body[body.Count - 1].X - dx, Y = body[body.Count - 1].Y - dy };
+
 
             body[0] = newHeadPos;
+            
         }
     }
 }

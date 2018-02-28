@@ -14,31 +14,43 @@ namespace ComplexSerialization
 
         static void Main(string[] args)
         {
-            Complex c1 = new Complex(1, 2);
-            Complex c2 = new Complex(1, 3);
+            Ser();
+            //Deser();
+        }
+        public static void Ser()
+        {
+            string s = Console.ReadLine();
+            string[] cmpx = s.Split(' ');
+            string[] cmp1 = cmpx[0].Split('/');
+            string[] cmp2 = cmpx[1].Split('/');
 
-            FileStream fs = new FileStream("ComplexNumber.xml", FileMode.Truncate, FileAccess.ReadWrite);
+            int i1 = int.Parse(cmp1[0]);
+            int i2 = int.Parse(cmp1[1]);
+            int i3 = int.Parse(cmp2[0]);
+            int i4 = int.Parse(cmp2[1]);
+
+            Complex c1 = new Complex(i1, i2);
+            Complex c2 = new Complex(i3, i4);
+
+            Complex addresult = c1 + c2;
+
+            FileStream fs = new FileStream(@"C:\Users\HP\Desktop\PP2\Lab4\ComplexSerialization\ComplexSerialization\ComplexNumber.xml", FileMode.Truncate, FileAccess.ReadWrite);
             XmlSerializer xs = new XmlSerializer(typeof(Complex));
 
-            FileStream fs2 = new FileStream("ComplexNumber2.xml", FileMode.Truncate, FileAccess.ReadWrite);
 
-            xs.Serialize(fs, c1);
-            xs.Serialize(fs2, c2);
+
+            xs.Serialize(fs, addresult);
             fs.Close();
-
-
         }
+
         public static void Deser()
         {
-            FileStream fs = new FileStream("ComplexNumber.xml", FileMode.Open, FileAccess.Read);
-            FileStream fs2 = new FileStream("ComplexNumber2.Xml", FileMode.Open, FileAccess.Read);
+            FileStream fs = new FileStream(@"ComplexNumber.xml", FileMode.Open, FileAccess.Read);
             XmlSerializer xs = new XmlSerializer(typeof(Complex));
 
-            Complex c1 = xs.Deserialize(fs) as Complex;
-            Complex c2 = xs.Deserialize(fs2) as Complex;
+            Complex addresult = xs.Deserialize(fs) as Complex;
 
-            Complex res = c1 + c2;
-            Console.WriteLine(res);
+            Console.WriteLine(addresult);
         }
     }
 }

@@ -17,8 +17,8 @@ namespace Snake
             while (game.isAlive)
             {
                 game.Draw();
-                ConsoleKeyInfo pressedButton = Console.ReadKey();
-                game.Process(pressedButton);
+                
+                game.Process();
             }
         }
     }

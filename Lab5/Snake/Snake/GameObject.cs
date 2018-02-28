@@ -12,6 +12,16 @@ namespace Snake
         public char sign { get; }
         public ConsoleColor color { get; }
 
+        public void Clear()
+        {
+            Console.ForegroundColor = ConsoleColor.Black;
+            foreach(Point p in body)
+            {
+                Console.SetCursorPosition(p.X, p.Y);
+                Console.Write(sign);
+            }
+        }
+
         public GameObject(Point firstPoint, ConsoleColor color, char sign)
         {
             this.body = new List<Point>();
@@ -22,6 +32,21 @@ namespace Snake
             this.color = color;
             this.sign = sign;
         }
+
+        public bool IsPointBelong(Point p)
+        {
+            bool res = false;
+            for (int i = 0; i < this.body.Count; i++)
+            {
+                if (this.body[i].X == p.X && this.body[i].Y == p.Y)
+                {
+                    res = true;
+                    break;
+                }
+            }
+            return res;
+        }
+
         public void Draw()
         {
             Console.ForegroundColor = color;
