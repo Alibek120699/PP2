@@ -70,7 +70,7 @@ namespace SnakeSer
 
                 while (Console.KeyAvailable == false  && IsAlive)
                 {
-                    Process();
+                    Process(); 
                     Thread.Sleep(GameSpeed);
                 }
 
