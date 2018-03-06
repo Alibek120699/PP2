@@ -14,8 +14,8 @@ namespace ComplexSerialization
 
         static void Main(string[] args)
         {
-            Ser();
-            //Deser();
+            //Ser();
+            Deser();
         }
         public static void Ser()
         {

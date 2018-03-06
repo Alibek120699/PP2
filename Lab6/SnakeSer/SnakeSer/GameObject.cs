@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
+using System.Xml.Serialization;
+using System.IO;
 
 namespace SnakeSer
 {
@@ -11,6 +14,7 @@ namespace SnakeSer
         public List<Point> body { get; set; }
         public char sign { get; }
         public ConsoleColor color { get; }
+        public object Streamwriter { get; private set; }
 
         public GameObject(Point head, char sign, ConsoleColor color)
         {
@@ -44,10 +48,7 @@ namespace SnakeSer
             Console.SetCursorPosition(p.X, p.Y);
             Console.Write(' ');
         }
-        public void Save()
-        {
-
-        }
+        
 
         public void Clear()
         {

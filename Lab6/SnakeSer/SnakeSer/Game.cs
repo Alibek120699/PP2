@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Xml.Serialization;
 using System.Threading;
+using System.Timers;
 
 namespace SnakeSer
 {
@@ -13,7 +14,8 @@ namespace SnakeSer
     {
         First,
         Second,
-        Third
+        Third,
+        Fourth
     }
 
     public class Game
@@ -25,7 +27,7 @@ namespace SnakeSer
         public Food food;
         public Wall wall;
         public bool IsAlive;
-
+        
         public int GameSpeed = 150;
 
         GameLevel gamelevel;
@@ -62,7 +64,7 @@ namespace SnakeSer
             food.Draw();
             worm.Draw();
             ConsoleKeyInfo pressedButton;
-
+            
             do
             {
                 pressedButton = Console.ReadKey();
@@ -190,32 +192,21 @@ namespace SnakeSer
 
         public void Save()
         {
-            Thread.ResetAbort();
-            Type tf = food.GetType();
-            string fname = tf.Name + ".xml";
-            StreamWriter sw = new StreamWriter(fname, false);
-            XmlSerializer xs = new XmlSerializer(tf);
-            xs.Serialize(sw, food);
-            sw.Close();
+            string s = @"C:\Users\HP\Desktop\PP2\Lab6\SnakeSer\SnakeSer\worm.xml";
+            FileStream fs = new FileStream(s, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            XmlSerializer xs = new XmlSerializer(this.GetType());
+            xs.Serialize(fs, worm);
+            xs.Serialize(fs, food);
+            xs.Serialize(fs, wall);
+            fs.Close();
 
-            Type twrm = worm.GetType();
-            string wrmname = twrm.Name + ".xml";
-            StreamWriter wrmsw = new StreamWriter(wrmname, false);
-            XmlSerializer wrmxs = new XmlSerializer(twrm);
-            xs.Serialize(wrmsw, worm);
-            wrmsw.Close();
+            
 
-            Type twl = wall.GetType();
-            string wlname = twrm.Name + ".xml";
-            StreamWriter wlsw = new StreamWriter(wlname, false);
-            XmlSerializer wlxs = new XmlSerializer(twl);
-            xs.Serialize(wlsw, wall);
-            wlsw.Close();
+
         }
-
         public void Load()
         {
-
+            
         }
 
         public void OpenSettings()

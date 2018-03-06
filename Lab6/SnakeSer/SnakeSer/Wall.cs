@@ -21,13 +21,16 @@ namespace SnakeSer
             switch (gamelevel)
             {
                 case GameLevel.First:
-                    fname = @"level1.txt";
+                    fname = @"TextFile1.txt";
                     break;
                 case GameLevel.Second:
-                    fname = @"level2.txt";
+                    fname = @"level1.txt";
                     break;
                 case GameLevel.Third:
                     fname = @"level3.txt";
+                    break;
+                case GameLevel.Fourth:
+                    fname = @"level2.txt";
                     break;
                 default:
                     break;
