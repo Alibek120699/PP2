@@ -27,11 +27,11 @@ namespace Calculator
 
             isOperationPerformed = false;
             Button btn = (Button)sender;
-            //btn.Text.Remove('.', ',');
-            if (btn.Text == ".")
+            //btn.Text.Replace('.', ',');
+            if (btn.Text == ",")
             {
                 
-                if (!textBox_result.Text.Contains("."))
+                if (!textBox_result.Text.Contains(","))
                     
                     textBox_result.Text = textBox_result.Text + btn.Text;
             }
@@ -79,6 +79,15 @@ namespace Calculator
                     break;
                 default:
                     break;
+            }
+        }
+
+        private void backspace_click(object sender, EventArgs e)
+        {
+            textBox_result.Text = textBox_result.Text.Remove(textBox_result.Text.Count()-1);
+            if (textBox_result.Text == null)
+            {
+                textBox_result.Text = "0";
             }
         }
     }
