@@ -61,6 +61,7 @@
             this.textBox_result = new System.Windows.Forms.TextBox();
             this.mnabla = new System.Windows.Forms.Button();
             this.currentoperation = new System.Windows.Forms.Label();
+            this.currentop = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnplsmns
@@ -125,6 +126,7 @@
             this.btnequal.TabIndex = 3;
             this.btnequal.Text = "=";
             this.btnequal.UseVisualStyleBackColor = false;
+            this.btnequal.Click += new System.EventHandler(this.btnequal_Click);
             // 
             // btn1
             // 
@@ -188,6 +190,7 @@
             this.btnpls.TabIndex = 7;
             this.btnpls.Text = "+";
             this.btnpls.UseVisualStyleBackColor = false;
+            this.btnpls.Click += new System.EventHandler(this.operation);
             // 
             // btn4
             // 
@@ -251,6 +254,7 @@
             this.btnmns.TabIndex = 11;
             this.btnmns.Text = "-";
             this.btnmns.UseVisualStyleBackColor = false;
+            this.btnmns.Click += new System.EventHandler(this.operation);
             // 
             // btn7
             // 
@@ -314,6 +318,7 @@
             this.btnmltpl.TabIndex = 15;
             this.btnmltpl.Text = "×";
             this.btnmltpl.UseVisualStyleBackColor = false;
+            this.btnmltpl.Click += new System.EventHandler(this.operation);
             // 
             // btnce
             // 
@@ -345,6 +350,7 @@
             this.btnc.TabIndex = 17;
             this.btnc.Text = "C";
             this.btnc.UseVisualStyleBackColor = false;
+            this.btnc.Click += new System.EventHandler(this.c_click);
             // 
             // btnbckspc
             // 
@@ -376,6 +382,7 @@
             this.btndvsn.TabIndex = 19;
             this.btndvsn.Text = "÷";
             this.btndvsn.UseVisualStyleBackColor = false;
+            this.btndvsn.Click += new System.EventHandler(this.operation);
             // 
             // btnprsnt
             // 
@@ -443,6 +450,7 @@
             this.mc.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.mc.FlatAppearance.BorderSize = 0;
             this.mc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.mc.ForeColor = System.Drawing.SystemColors.GrayText;
             this.mc.Location = new System.Drawing.Point(-3, 220);
             this.mc.Name = "mc";
             this.mc.Size = new System.Drawing.Size(45, 40);
@@ -457,6 +465,7 @@
             this.mr.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.mr.FlatAppearance.BorderSize = 0;
             this.mr.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.mr.ForeColor = System.Drawing.SystemColors.GrayText;
             this.mr.Location = new System.Drawing.Point(48, 220);
             this.mr.Name = "mr";
             this.mr.Size = new System.Drawing.Size(45, 40);
@@ -471,12 +480,14 @@
             this.mpls.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.mpls.FlatAppearance.BorderSize = 0;
             this.mpls.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.mpls.ForeColor = System.Drawing.SystemColors.GrayText;
             this.mpls.Location = new System.Drawing.Point(115, 220);
             this.mpls.Name = "mpls";
             this.mpls.Size = new System.Drawing.Size(45, 40);
             this.mpls.TabIndex = 26;
             this.mpls.Text = "M+";
             this.mpls.UseVisualStyleBackColor = false;
+            this.mpls.Click += new System.EventHandler(this.mplus);
             // 
             // mmns
             // 
@@ -484,12 +495,14 @@
             this.mmns.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.mmns.FlatAppearance.BorderSize = 0;
             this.mmns.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.mmns.ForeColor = System.Drawing.SystemColors.GrayText;
             this.mmns.Location = new System.Drawing.Point(166, 220);
             this.mmns.Name = "mmns";
             this.mmns.Size = new System.Drawing.Size(45, 40);
             this.mmns.TabIndex = 27;
             this.mmns.Text = "M-";
             this.mmns.UseVisualStyleBackColor = false;
+            this.mmns.Click += new System.EventHandler(this.mminus);
             // 
             // ms
             // 
@@ -511,7 +524,7 @@
             this.textBox_result.Location = new System.Drawing.Point(-3, 143);
             this.textBox_result.MinimumSize = new System.Drawing.Size(343, 50);
             this.textBox_result.Name = "textBox_result";
-            this.textBox_result.Size = new System.Drawing.Size(343, 50);
+            this.textBox_result.Size = new System.Drawing.Size(343, 45);
             this.textBox_result.TabIndex = 29;
             this.textBox_result.Text = "0";
             this.textBox_result.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -523,6 +536,7 @@
             this.mnabla.FlatAppearance.BorderSize = 0;
             this.mnabla.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
             this.mnabla.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.mnabla.ForeColor = System.Drawing.SystemColors.GrayText;
             this.mnabla.Location = new System.Drawing.Point(286, 220);
             this.mnabla.Name = "mnabla";
             this.mnabla.Size = new System.Drawing.Size(45, 40);
@@ -540,12 +554,24 @@
             this.currentoperation.TabIndex = 31;
             this.currentoperation.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
+            // currentop
+            // 
+            this.currentop.AutoSize = true;
+            this.currentop.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.currentop.Location = new System.Drawing.Point(40, 105);
+            this.currentop.MinimumSize = new System.Drawing.Size(300, 25);
+            this.currentop.Name = "currentop";
+            this.currentop.Size = new System.Drawing.Size(300, 25);
+            this.currentop.TabIndex = 32;
+            this.currentop.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
             // Calculator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.ClientSize = new System.Drawing.Size(343, 565);
+            this.Controls.Add(this.currentop);
             this.Controls.Add(this.currentoperation);
             this.Controls.Add(this.mnabla);
             this.Controls.Add(this.textBox_result);
@@ -624,6 +650,7 @@
         private System.Windows.Forms.TextBox textBox_result;
         private System.Windows.Forms.Button mnabla;
         private System.Windows.Forms.Label currentoperation;
+        private System.Windows.Forms.Label currentop;
     }
 }
 
