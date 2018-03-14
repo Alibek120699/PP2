@@ -208,5 +208,49 @@ namespace Calculator2
             currentop.Text = "";
             textBox_result.Text = "0";
         }
+
+        private void squareroot(object sender, EventArgs e)
+        {
+            if (Double.Parse(textBox_result.Text) < 0)
+            {
+                textBox_result.Text = "MATH ERROR!!!";
+                smthpressed = true;
+            }
+            else
+            {
+                currentop.Text = "sqrt(" + textBox_result.Text + ")";
+                textBox_result.Text = (Math.Sqrt(Double.Parse(textBox_result.Text))).ToString();
+            }
+        }
+
+        private void square(object sender, EventArgs e)
+        {
+            currentop.Text = "(" + textBox_result.Text + ")²";
+            textBox_result.Text = (Math.Pow(Double.Parse(textBox_result.Text), 2)).ToString();
+        }
+
+        private void inverse(object sender, EventArgs e)
+        {
+            if (Double.Parse(textBox_result.Text) == 0)
+            {
+                textBox_result.Text = "MATH ERROR!!!";
+                smthpressed = true;
+            }
+            else
+            {
+                currentop.Text = "1/(" + textBox_result.Text + ")";
+                textBox_result.Text = (1 / (Double.Parse(textBox_result.Text))).ToString();
+            }
+        }
+
+        private void calculate_percent(object sender, EventArgs e)
+        {
+            smthpressed = true;
+            if (result != 0)
+            {
+                textBox_result.Text = ((result * Double.Parse(textBox_result.Text)) / 100).ToString();
+                currentop.Text = result.ToString() + operationperformed + textBox_result.Text;
+            }
+        }
     }
 }

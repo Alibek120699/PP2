@@ -398,6 +398,7 @@
             this.btnprsnt.TabIndex = 20;
             this.btnprsnt.Text = "%";
             this.btnprsnt.UseVisualStyleBackColor = false;
+            this.btnprsnt.Click += new System.EventHandler(this.calculate_percent);
             // 
             // btnsqrt
             // 
@@ -413,6 +414,7 @@
             this.btnsqrt.TabIndex = 21;
             this.btnsqrt.Text = "√";
             this.btnsqrt.UseVisualStyleBackColor = false;
+            this.btnsqrt.Click += new System.EventHandler(this.squareroot);
             // 
             // btnsqr
             // 
@@ -428,6 +430,7 @@
             this.btnsqr.TabIndex = 22;
             this.btnsqr.Text = "x²";
             this.btnsqr.UseVisualStyleBackColor = false;
+            this.btnsqr.Click += new System.EventHandler(this.square);
             // 
             // btninverse
             // 
@@ -443,6 +446,7 @@
             this.btninverse.TabIndex = 23;
             this.btninverse.Text = "1/x";
             this.btninverse.UseVisualStyleBackColor = false;
+            this.btninverse.Click += new System.EventHandler(this.inverse);
             // 
             // mc
             // 
