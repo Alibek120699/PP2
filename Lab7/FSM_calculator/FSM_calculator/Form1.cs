@@ -12,14 +12,24 @@ namespace FSM_calculator
 {
     public partial class FSMcalculator : Form
     {
+        Brain brain = new Brain();
+
         public FSMcalculator()
         {
             InitializeComponent();
+            brain.invoker = ShowInfo;
         }
 
-        private void Process(object sender, EventArgs e)
+        public void ShowInfo(string msg)
         {
+            textBox_result.Text = msg;
+            currentop.Text = msg;
+        }
 
+        public void BtnClick(object sender, EventArgs e)
+        {
+            Button btn = sender as Button;
+            brain.Process(btn.Text);
         }
     }
 }
