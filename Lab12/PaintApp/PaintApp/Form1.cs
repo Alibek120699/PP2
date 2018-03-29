@@ -11,8 +11,10 @@ using System.Windows.Forms;
 
 namespace PaintApp
 {
-    public enum Tool { Pencil, Rectangle, Ellipse, Line, Triangle, IsoTriangle, Eraser};
+    public enum Tool { Pencil, Rectangle, Ellipse, Line, Triangle, IsoTriangle, Eraser, Fill};
 
+    enum BmpCreationMode { AfterFill, FromFile, Init};
+   
     public partial class Form1 : Form
     {
         Point firstpoint;
@@ -21,12 +23,15 @@ namespace PaintApp
         Graphics gfx;
         GraphicsPath path;
         Pen pen;
+        Pen erase;
+        Pen figurepen = new Pen(Color.Black, 5);
         int fx, fy, sx, sy;
         Tool t;
-
+        
         public Form1()
         {
             InitializeComponent();
+            SetupPictureBox(BmpCreationMode.Init, "");
             gfx = CreateGraphics();
             pen = new Pen(Color.Black, 2);
             path = new GraphicsPath();
@@ -36,19 +41,108 @@ namespace PaintApp
             gfx.Clear(Color.White);
             t = Tool.Pencil;
         }
+        private void SetupPictureBox(BmpCreationMode mode, string fileName)
+        {
+
+            if (mode == BmpCreationMode.Init)
+            {
+                btmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            }
+            else if (mode == BmpCreationMode.FromFile)
+            {
+                btmp = new Bitmap(Bitmap.FromFile(openFileDialog1.FileName));
+            }
+
+            gfx = Graphics.FromImage(btmp);
+
+            if (mode == BmpCreationMode.Init)
+            {
+                gfx.Clear(Color.White);
+            }
+
+            pictureBox1.Image = btmp;
+            gfx.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+
+
+        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
 
         }
 
+        private void btncolor_Click(object sender, EventArgs e)
+        {
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                pen.Color = colorDialog1.Color;
+                figurepen.Color = colorDialog1.Color;
+            }
+        }
+
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
+            SetupPictureBox(BmpCreationMode.AfterFill, "");
+            if (t == Tool.Fill)
+            {
+                MapFill mf = new MapFill();
+                mf.Fill(gfx, firstpoint, pen.Color, ref btmp);
+                SetupPictureBox(BmpCreationMode.AfterFill, "");
+            }
             firstpoint = e.Location;
+        }
+
+        private void toolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            string widthofpen = toolStripMenuItem3 + "";
+            pen = new Pen(pen.Color, int.Parse(widthofpen));
+        }
+
+        private void toolStripMenuItem4_Click(object sender, EventArgs e)
+        {
+            string widthofpen = toolStripMenuItem4 + "";
+            pen = new Pen(pen.Color, int.Parse(widthofpen));
+        }
+
+        private void toolStripMenuItem5_Click(object sender, EventArgs e)
+        {
+            string widthofpen = toolStripMenuItem5 + "";
+            pen = new Pen(pen.Color, int.Parse(widthofpen));
+        }
+
+        private void toolStripMenuItem6_Click(object sender, EventArgs e)
+        {
+            string widthofpen = toolStripMenuItem6 + "";
+            pen = new Pen(pen.Color, int.Parse(widthofpen));
+        }
+
+        private void toolStripMenuItem7_Click(object sender, EventArgs e)
+        {
+            string widthoferaser = toolStripMenuItem7 + "";
+            erase = new Pen(Color.White, int.Parse(widthoferaser));
+        }
+
+        private void toolStripMenuItem8_Click(object sender, EventArgs e)
+        {
+            string widthoferaser = toolStripMenuItem8 + "";
+            erase = new Pen(Color.White, int.Parse(widthoferaser));
+        }
+
+        private void toolStripMenuItem9_Click(object sender, EventArgs e)
+        {
+            string widthoferaser = toolStripMenuItem9 + "";
+            erase = new Pen(Color.White, int.Parse(widthoferaser));
+        }
+
+        private void toolStripMenuItem10_Click(object sender, EventArgs e)
+        {
+            string widthoferaser = toolStripMenuItem10 + "";
+            erase = new Pen(Color.White, int.Parse(widthoferaser));
         }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
+            figurepen = new Pen(figurepen.Color, 5);
             if (e.Button == MouseButtons.Left)
             {
                 path.Reset();
@@ -63,6 +157,8 @@ namespace PaintApp
                 {
                     case Tool.Pencil:
                         gfx.DrawLine(pen, firstpoint, secondpoint);
+                        RectangleF r = new RectangleF(secondpoint.X - pen.Width / 2, secondpoint.Y - pen.Width / 2, pen.Width, pen.Width);
+                        gfx.FillEllipse(pen.Brush, r);
                         firstpoint = secondpoint;
                         break;
                     case Tool.Rectangle:
@@ -193,20 +289,127 @@ namespace PaintApp
                         }
                         break;
                     case Tool.Eraser:
-                        Pen erase = new Pen(Color.White, 10);
+                        //erase = new Pen(Color.White, 10);
                         gfx.DrawLine(erase, firstpoint, secondpoint);
+                        RectangleF er= new RectangleF(secondpoint.X - erase.Width/2, secondpoint.Y - erase.Width/2, erase.Width, erase.Width);
+                        gfx.FillRectangle(erase.Brush, er);
                         firstpoint = secondpoint;
+                        break;
+                    case Tool.Fill:
+                        
                         break;
                 }
                 pictureBox1.Refresh();
             }
         }
 
+        private void pencilToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            t = Tool.Pencil;
+        }
+
+        private void rectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            t = Tool.Rectangle;
+        }
+
+        private void ellipseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            t = Tool.Ellipse;
+        }
+
+        private void lineToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            t = Tool.Line;
+        }
+
+        private void triangleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            t = Tool.Triangle;
+        }
+
+        private void isoTriangleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            t = Tool.IsoTriangle;
+        }
+
+        
+
+        
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                pictureBox1.Image.Save(saveFileDialog1.FileName);
+            }
+        }
+
+        
+
+        private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                SetupPictureBox(BmpCreationMode.FromFile, openFileDialog1.FileName);
+            }
+        }
+
+        private void fillToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            t = Tool.Fill;
+        }
+
+        
+
+        private void eraserToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            t = Tool.Eraser;
+        }
+
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
             if(path!= null)
             {
-                gfx.DrawPath(pen, path);
+                switch (t)
+                {
+                    case Tool.Pencil:
+                        gfx.DrawPath(pen, path);
+                        break;
+                    case Tool.Rectangle:
+                        gfx.DrawPath(figurepen, path);
+                        break;
+                    case Tool.Line:
+                        gfx.DrawPath(figurepen, path);
+                        break;
+                    case Tool.Ellipse:
+                        gfx.DrawPath(figurepen, path);
+                        break;
+                    case Tool.Triangle:
+                        gfx.DrawPath(figurepen, path);
+                        break;
+                    case Tool.IsoTriangle:
+                        gfx.DrawPath(figurepen, path);
+                        break;
+                    
+                }
+                
+                
             }
             
         }
@@ -216,33 +419,6 @@ namespace PaintApp
             e.Graphics.DrawPath(pen, path);
         }
 
-        private void tools_click(object sender, EventArgs e)
-        {
-            Button btn = sender as Button;
-            switch (btn.Text)
-            {
-                case "Pencil":
-                    t = Tool.Pencil;
-                    break;
-                case "Rect":
-                    t = Tool.Rectangle;
-                    break;
-                case "Ellipse":
-                    t = Tool.Ellipse;
-                    break;
-                case "Line":
-                    t = Tool.Line;
-                    break;
-                case "Triangle":
-                    t = Tool.Triangle;
-                    break;
-                case "IsoTriangle":
-                    t = Tool.IsoTriangle;
-                    break;
-                case "Eraser":
-                    t = Tool.Eraser;
-                    break;
-            }
-        }
+        
     }
 }
