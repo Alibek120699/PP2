@@ -18,20 +18,23 @@ namespace Battleship
         killed
     }
 
-
     public delegate void MyDelegate(CellState[,] map);
 
     public class Brain
     {
+        public bool isHorizontal = true;
 
-        public ShipType[] st = { ShipType.D1, ShipType.D1, ShipType.D1, ShipType.D1,
-                          ShipType.D2, ShipType.D2, ShipType.D2,
-                          ShipType.D3, ShipType.D3,
-                          ShipType.D4};
+
+        public ShipType[] st = { ShipType.D4,
+                                 ShipType.D3, ShipType.D3,
+                                 ShipType.D2, ShipType.D2, ShipType.D2,
+                                 ShipType.D1, ShipType.D1, ShipType.D1, ShipType.D1};
 
         public int stIndex = -1;
+        
 
-        CellState[,] map = new CellState[10, 10];
+
+        public CellState[,] map = new CellState[10, 10];
         List<Ship> units = new List<Ship>();
 
         MyDelegate invoker;
@@ -102,11 +105,7 @@ namespace Battleship
 
                         if (killed)
                         {
-                            foreach (CellState c in map)
-                            {
-                                
-                                
-                            }
+                            
                             foreach (ShipPoint p in units[index].body)
                             {
                                 map[p.X, p.Y] = CellState.killed;
@@ -115,49 +114,49 @@ namespace Battleship
                                 {
                                     if (p.X + 1 < 10)
                                     {
-                                        if (map[p.X + 1, p.Y] == CellState.empty || map[p.X + 1, p.Y] == CellState.aura)
+                                        if (map[p.X + 1, p.Y] == CellState.aura)
                                             map[p.X + 1, p.Y] = CellState.missed;
                                     }
                                     if (j + 1 < 10)
                                     {
-                                        if (map[p.X, p.Y + 1] == CellState.empty || map[p.X, p.Y + 1] == CellState.aura)
+                                        if (map[p.X, p.Y + 1] == CellState.aura)
                                             map[p.X, p.Y + 1] = CellState.missed;
                                     }
                                     if (p.X + 1 < 10 && p.Y + 1 < 10)
                                     {
-                                        if (map[p.X + 1, p.Y + 1] == CellState.empty || map[p.X + 1, p.Y + 1] == CellState.aura)
+                                        if (map[p.X + 1, p.Y + 1] == CellState.aura)
                                             map[p.X + 1, p.Y + 1] = CellState.missed;
 
                                     }
 
                                     if (p.Y - 1 >= 0)
                                     {
-                                        if (map[p.X, p.Y - 1] == CellState.empty || map[p.X, p.Y - 1] == CellState.aura)
+                                        if (map[p.X, p.Y - 1] == CellState.aura)
                                             map[p.X, p.Y - 1] = CellState.missed;
                                     }
                                     if (p.X + 1 < 10 && p.Y - 1 >= 0)
                                     {
 
-                                        if (map[p.X + 1, p.Y - 1] == CellState.empty || map[p.X + 1, p.Y - 1] == CellState.aura)
+                                        if (map[p.X + 1, p.Y - 1] == CellState.aura)
                                             map[p.X + 1, p.Y - 1] = CellState.missed;
 
                                     }
 
                                     if (p.X - 1 >= 0 && j + 1 < 10)
                                     {
-                                        if (map[p.X - 1, p.Y + 1] == CellState.empty || map[p.X - 1, p.Y + 1] == CellState.aura)
+                                        if (map[p.X - 1, p.Y + 1] == CellState.aura)
                                             map[p.X - 1, p.Y + 1] = CellState.missed;
 
                                     }
                                     if (p.X - 1 >= 0)
                                     {
-                                        if (map[p.X - 1, p.Y] == CellState.empty || map[p.X - 1, p.Y] == CellState.aura)
+                                        if (map[p.X - 1, p.Y] == CellState.aura)
                                             map[p.X - 1, p.Y] = CellState.missed;
                                     }
 
                                     if (p.X - 1 >= 0 && p.Y - 1 >= 0)
                                     {
-                                        if (map[p.X - 1, p.Y - 1] == CellState.empty || map[p.X - 1, p.Y - 1] == CellState.aura)
+                                        if (map[p.X - 1, p.Y - 1] == CellState.aura)
                                             map[p.X - 1, p.Y - 1] = CellState.missed;
                                     }
                                 }
@@ -167,7 +166,6 @@ namespace Battleship
 
                     break;
                 case CellState.striked:
-                    //map[i, j] = CellState.striked;
                     break;
                 case CellState.missed:
                     break;
@@ -289,7 +287,7 @@ namespace Battleship
             if (stIndex + 1 < st.Length)
             {
                 stIndex++;
-                Ship ship = new Ship(p, st[stIndex]);
+                Ship ship = new Ship(p, st[stIndex], isHorizontal);
                 if (IsGoodLocated(ship)) {
                     units.Add(ship);
                     MarkLocation(ship);

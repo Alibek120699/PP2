@@ -12,12 +12,12 @@ namespace Battleship
 {
     public partial class Form1 : Form
     {
-        
+        GameLogic gl = new GameLogic();
+
         public Form1()
         {
             InitializeComponent();
 
-            GameLogic gl = new GameLogic();
             this.Controls.Add(gl.p1);
             this.Controls.Add(gl.p2);
         }
@@ -25,6 +25,16 @@ namespace Battleship
         private void Form1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void directionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            gl.p1.brain.isHorizontal = gl.p1.brain.isHorizontal ^ true;   
+        }
+
+        private void startToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }
