@@ -105,8 +105,8 @@ namespace Battleship
         
         private void ReplacePos(object sender, EventArgs e)
         {
-            
-            /*Button bn = sender as Button;
+            /*
+            Button bn = sender as Button;
             bn.BackColor = Color.White;
             bn.Size = new Size(20, 20);
             bool dir = brain.isHorizontal;
@@ -114,39 +114,42 @@ namespace Battleship
             int ox = int.Parse(coordinates[0]);
             int oy = int.Parse(coordinates[1]);
             int ind;
-            ind = ox *10 + oy;
-            if (dir)
+            ind = ox * 10 + oy;
+            if (!dir)
             {
                 if (ind + 1 < 100)
-                    Controls[ind + 1].BackColor = Color.White;
+                    Controls[ind + 1].BackColor = Color.FromName(prevcolor);
+                //Controls[ind].BackColor = Color.White;
                 if (ind + 2 < 100)
-                    Controls[ind + 2].BackColor = Color.White;
+                    Controls[ind + 2].BackColor = Color.FromName(prevcolor);
                 if (ind + 3 < 100)
-                    Controls[ind + 3].BackColor = Color.White;
-            }*/
-            
+                    Controls[ind + 3].BackColor = Color.FromName(prevcolor);
+            }
+            */
         }
-
+        public string prevcolor;
         private void CanPut(object sender, EventArgs e)
         {
             
             /*Button bn = sender as Button;
-            bn.BackColor = Color.Blue;
+            prevcolor = bn.BackColor + "";
+            bn.BackColor = Color.Green;
             bn.Size = new Size(20, 20);
             string[] coordinates = bn.Name.Split('_');
-            int oy = int.Parse(coordinates[0]);
-            int ox = int.Parse(coordinates[1]);
+            int ox = int.Parse(coordinates[0]);
+            int oy = int.Parse(coordinates[1]);
             int ind;
             ind = ox * 10 + oy;
             bool dir = brain.isHorizontal;
-            if (dir)
+            if (!dir)
             {
-                if(oy-1>0 && ind + 1 < 100)
-                    Controls[ind + 1].BackColor = Color.Blue;
+                if(ind + 1 < 100)
+                    Controls[ind + 1].BackColor = Color.Green;
+                //Controls[ind].BackColor = Color.Blue;
                 if (ind + 2 < 100)
-                    Controls[ind + 2].BackColor = Color.Blue;
+                    Controls[ind + 2].BackColor = Color.Green;
                 if (ind + 3 < 100)
-                    Controls[ind + 3].BackColor = Color.Blue;
+                    Controls[ind + 3].BackColor = Color.Green;
             }*/
         }
 
@@ -157,6 +160,10 @@ namespace Battleship
             {
                 brain.Process(btn.Name);
             }
+            /*if (brain.HaveAllPlaced == true)
+            {
+                brain.Process2(btn.Name);
+            }*/
             else
             {
                 if (!brain.Process2(btn.Name))

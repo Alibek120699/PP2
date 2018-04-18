@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FSM_calculator
 {
-    public delegate void MyDelegate(string msg);
+    public delegate void MyDelegate(string msg, string labelmsg);
     public enum CurrentState
     {
         Zero,
@@ -23,6 +23,7 @@ namespace FSM_calculator
 
         public string firstnumber = "0";
         public string result = "0";
+        public string labelmsg = "";
         public string op = "";
         public string savednumber = "0";
 
@@ -68,8 +69,10 @@ namespace FSM_calculator
             if (isInput)
             {
                 result = "";
+                labelmsg = "";
                 currentstate = CurrentState.Zero;
-                invoker.Invoke(result);
+                invoker.Invoke(result, labelmsg);
+                
             }
             else
             {
@@ -105,7 +108,7 @@ namespace FSM_calculator
 
 
                 currentstate = CurrentState.AccumulateDigits;
-                invoker.Invoke(result);
+                invoker.Invoke(result, labelmsg);
             }
 
 
@@ -135,7 +138,8 @@ namespace FSM_calculator
                     {
                         result = "0";
                         firstnumber = "0";
-                        invoker.Invoke(result);
+                        labelmsg = "";
+                        invoker.Invoke(result, labelmsg);
                         k = 0;
 
 
@@ -144,7 +148,8 @@ namespace FSM_calculator
                     {
 
                         result = "0";
-                        invoker.Invoke("0");
+                        labelmsg = "";
+                        invoker.Invoke("0", "");
                         k = 0;
 
                     }
@@ -153,6 +158,7 @@ namespace FSM_calculator
                         if (result == "Error!!!")
                         {
                             result = "0";
+                            //labelmsg = "";
                         }
                         else
                         {
@@ -160,11 +166,12 @@ namespace FSM_calculator
                             if (result.Length == 0)
                             {
                                 result = "0";
+                                labelmsg = "";
                             }
                         }
 
 
-                        invoker.Invoke(result);
+                        invoker.Invoke(result, labelmsg);
 
                     }
 
@@ -178,25 +185,27 @@ namespace FSM_calculator
                         double b = double.Parse(result) / 100;
 
                         result = b.ToString();
-                        invoker.Invoke(result);
+                        invoker.Invoke(result, labelmsg);
 
                     }
                     else if (item == "1/x")
                     {
                         double b = 1 / double.Parse(result);
+                        labelmsg = "1/" + result;
                         result = b.ToString();
+                        
                         if(result== "∞")
                         {
                             result = "Error!!!";
                         }
-                        invoker.Invoke(result);
+                        invoker.Invoke(result, labelmsg);
                     }
                     else if (item == "x²")
                     {
                         double b = Math.Pow(double.Parse(result), 2);
-
+                        labelmsg = result + "²";
                         result = b.ToString();
-                        invoker.Invoke(result);
+                        invoker.Invoke(result, labelmsg);
                     }
                     else if (item == "√")
                     {
@@ -204,21 +213,23 @@ namespace FSM_calculator
                         if (a >= 0)
                         {
                             double b = Math.Sqrt(a);
+                            labelmsg = "sqrt(" + result + ")";
                             result = b.ToString();
                         }
                         else
                         {
                             result = "Error!!!";
+                            labelmsg = "";
                         }
                         
-                        invoker.Invoke(result);
+                        invoker.Invoke(result, labelmsg);
                     }
                     else if (item == "±")
                     {
                         double b = (-1) * double.Parse(result);
 
                         result = b.ToString();
-                        invoker.Invoke(result);
+                        invoker.Invoke(result, labelmsg);
                     }
                 }
                 else if (savingop.Contains(item))
@@ -247,7 +258,7 @@ namespace FSM_calculator
                     {
                         if (flag == true)
                         {
-                            invoker.Invoke(savednumber);
+                            invoker.Invoke(savednumber, labelmsg);
                         }
 
                     }
@@ -278,7 +289,7 @@ namespace FSM_calculator
                 if (item == "," && !result.Contains(",")) result += ",";
 
                 currentstate = CurrentState.AccumulateDigits;
-                invoker.Invoke(result);
+                invoker.Invoke(result, labelmsg);
             }
             else
             {
@@ -299,9 +310,11 @@ namespace FSM_calculator
             {
                 op = item;
                 firstnumber = result;
+                labelmsg = firstnumber + op;
                 result = "0";
                 currentstate = CurrentState.ComputePending;
-                invoker.Invoke(result);
+                invoker.Invoke(result, labelmsg);
+                
             }
             else
             {
@@ -327,18 +340,22 @@ namespace FSM_calculator
                 if (op == "+")
                 {
                     r = a1 + a2;
+                    labelmsg = "";
                 }
                 else if (op == "-")
                 {
                     r = a1 - a2;
+                    labelmsg = "";
                 }
                 else if (op == "÷")
                 {
                     r = a1 / a2;
+                    labelmsg = "";
                 }
                 else if (op == "×")
                 {
                     r = a1 * a2;
+                    labelmsg = "";
                 }
 
                 result = r.ToString();
@@ -349,7 +366,10 @@ namespace FSM_calculator
                     result = "Error!!!";
                     currentstate = CurrentState.Zero;
                 }
-                invoker.Invoke(result);
+                invoker.Invoke(result, labelmsg);
+                
+                //result = "0";
+                
             }
             else
             {

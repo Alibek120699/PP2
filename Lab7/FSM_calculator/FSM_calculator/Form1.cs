@@ -20,10 +20,10 @@ namespace FSM_calculator
             brain.invoker = ShowInfo;
         }
 
-        public void ShowInfo(string msg)
+        public void ShowInfo(string msg, string labelmsg)
         {
             textBox_result.Text = msg;
-            currentop.Text = msg;
+            currentop.Text = labelmsg;
         }
 
         public void BtnClick(object sender, EventArgs e)

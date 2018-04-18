@@ -34,7 +34,7 @@ namespace Battleship
 
         private void startToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+            //gl.p1.brain.HaveAllPlaced = true;
         }
     }
 }

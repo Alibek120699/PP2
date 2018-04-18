@@ -35,6 +35,7 @@ namespace gfx
             g.FillEllipse(circle_brush, 600, 350, 20, 20);
             g.FillEllipse(circle_brush, 520, 220, 20, 20);
             g.FillEllipse(circle_brush, 410, 90, 20, 20);
+            g.FillEllipse(circle_brush, 20, 20, 20, 20);
             Brush centre = new SolidBrush(Color.Yellow);
             Point c1 = new Point(312, 207);
             Point c2 = new Point(352, 187);

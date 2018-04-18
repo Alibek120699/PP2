@@ -22,6 +22,7 @@ namespace Battleship
 
         void MakeBotTurn()
         {
+            
             Thread.Sleep(1000);
             Random rnd = new Random();
             int i = rnd.Next(0, 10);

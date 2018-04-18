@@ -24,7 +24,7 @@ namespace PaintApp
         GraphicsPath path;
         Pen pen;
         Pen erase;
-        Pen figurepen = new Pen(Color.Black, 5);
+        //Pen figurepen = new Pen(Color.Black, 3);
         int fx, fy, sx, sy;
         Tool t;
         
@@ -38,6 +38,7 @@ namespace PaintApp
             btmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             pictureBox1.Image = btmp;
             gfx = Graphics.FromImage(btmp);
+            //gfx.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             gfx.Clear(Color.White);
             t = Tool.Pencil;
         }
@@ -76,7 +77,7 @@ namespace PaintApp
             if (colorDialog1.ShowDialog() == DialogResult.OK)
             {
                 pen.Color = colorDialog1.Color;
-                figurepen.Color = colorDialog1.Color;
+                
             }
         }
 
@@ -142,13 +143,13 @@ namespace PaintApp
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
-            figurepen = new Pen(figurepen.Color, 5);
+            pen = new Pen(pen.Color, 5);
             if (e.Button == MouseButtons.Left)
             {
                 path.Reset();
                 secondpoint = e.Location;
-                //path.AddLine(firstpoint, secondpoint);
-                Refresh();
+                
+                //Refresh();
                 fx = firstpoint.X;
                 fy = firstpoint.Y;
                 sx = secondpoint.X;
@@ -207,6 +208,7 @@ namespace PaintApp
                             interior = new Point(sx, fy);
                             Point[] tr1 = { secondpoint, interior, firstpoint };
                             path.AddPolygon(tr1);
+                            //Refresh();
                         }
                         else if (sx < fx && sy > fy)
                         {
@@ -214,6 +216,7 @@ namespace PaintApp
                             firstpoint = new Point(fx, sy);
                             Point[] tr2 = { interior, secondpoint, firstpoint };
                             path.AddPolygon(tr2);
+                            //Refresh();
                         }
                         else if (sx > fx && sy < fy)
                         {
@@ -221,12 +224,14 @@ namespace PaintApp
                             secondpoint = new Point(sx, fy);
                             Point[] tr3 = { interior, firstpoint, secondpoint };
                             path.AddPolygon(tr3);
+                            //Refresh();
                         }
                         else
                         {
                             interior = new Point(fx, sy);
                             Point[] tr4 = { firstpoint, interior, secondpoint };
                             path.AddPolygon(tr4);
+                            //Refresh();
                         }
                         break;
                     case Tool.IsoTriangle:
@@ -244,6 +249,7 @@ namespace PaintApp
                             exterior = new Point(sx, fy);
                             Point[] isotr1 = { firstpoint, interior, exterior };
                             path.AddPolygon(isotr1);
+                            //Refresh();
                         }
                         else if (fx < sx && fy < sy)
                         {
@@ -258,6 +264,7 @@ namespace PaintApp
                             }
                             Point[] isotr2 = { exterior, interior, secondpoint };
                             path.AddPolygon(isotr2);
+                            //Refresh();
                         }
                         else if (fx > sx && fy < sy)
                         {
@@ -272,6 +279,7 @@ namespace PaintApp
                             exterior = new Point(fx, sy);
                             Point[] isotr3 = { secondpoint, interior, exterior };
                             path.AddPolygon(isotr3);
+                            //Refresh();
                         }
                         else
                         {
@@ -286,6 +294,7 @@ namespace PaintApp
                             exterior = new Point(sx, fy);
                             Point[] isotr4 = { exterior, interior, firstpoint };
                             path.AddPolygon(isotr4);
+                            //Refresh();
                         }
                         break;
                     case Tool.Eraser:
@@ -344,10 +353,12 @@ namespace PaintApp
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            saveFileDialog1.Filter ="PNG files (*.png)|*.png|All files (*.*)|*.*";
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 pictureBox1.Image.Save(saveFileDialog1.FileName);
             }
+            
         }
 
         
@@ -384,7 +395,8 @@ namespace PaintApp
 
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
-            if(path!= null)
+            gfx.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            if (path!= null)
             {
                 switch (t)
                 {
@@ -392,19 +404,22 @@ namespace PaintApp
                         gfx.DrawPath(pen, path);
                         break;
                     case Tool.Rectangle:
-                        gfx.DrawPath(figurepen, path);
+                        gfx.DrawPath(pen, path);
                         break;
                     case Tool.Line:
-                        gfx.DrawPath(figurepen, path);
+                        gfx.DrawPath(pen, path);
                         break;
                     case Tool.Ellipse:
-                        gfx.DrawPath(figurepen, path);
+                        gfx.DrawPath(pen, path);
                         break;
                     case Tool.Triangle:
-                        gfx.DrawPath(figurepen, path);
+                        gfx.DrawPath(pen, path);
                         break;
                     case Tool.IsoTriangle:
-                        gfx.DrawPath(figurepen, path);
+                        gfx.DrawPath(pen, path);
+                        break;
+                    case Tool.Eraser:
+                        gfx.DrawPath(erase, path);
                         break;
                     
                 }
@@ -416,6 +431,8 @@ namespace PaintApp
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
+            Refresh();
+            gfx.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             e.Graphics.DrawPath(pen, path);
         }
 

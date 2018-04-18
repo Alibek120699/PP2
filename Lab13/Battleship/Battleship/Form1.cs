@@ -16,7 +16,7 @@ namespace Battleship
         {
             InitializeComponent();
         }
-        public List<Button> buttons;
+        
         private void Form1_Load(object sender, EventArgs e)
         {
             for (int i = 0; i < 10; i++)
@@ -25,9 +25,10 @@ namespace Battleship
                 {
                     Button btn = new Button();
                     btn.Name = (i + " " + j) + "";
-                    btn.Location = new Point(i*5 + 10, j * 5 + 10);
-                    btn.BackColor = Color.Black;
-                    btn.CreateControl();
+                    btn.Location = new Point(i * 30, j * 30);
+                    btn.Size = new Size(30,30);
+                    btn.BackColor = default(Color);
+                    Controls.Add(btn);
                 }
             }
         }

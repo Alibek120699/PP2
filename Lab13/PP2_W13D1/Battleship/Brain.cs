@@ -23,7 +23,7 @@ namespace Battleship
     public class Brain
     {
         public bool isHorizontal = true;
-
+        //public bool HaveAllPlaced = false;
 
         public ShipType[] st = { ShipType.D4,
                                  ShipType.D3, ShipType.D3,
@@ -55,126 +55,129 @@ namespace Battleship
         public bool Process2(string msg)
         {
             bool successShoot = false;
+            
+                string[] val = msg.Split('_');
+                int i = int.Parse(val[0]);
+                int j = int.Parse(val[1]);
 
-            string[] val = msg.Split('_');
-            int i = int.Parse(val[0]);
-            int j = int.Parse(val[1]);
+                switch (map[i, j])
+                {
+                    case CellState.empty:
+                        map[i, j] = CellState.missed;
+                        break;
+                    case CellState.aura:
+                        map[i, j] = CellState.missed;
+                        break;
+                    case CellState.busy:
+                        map[i, j] = CellState.striked;
+                        successShoot = true;
 
-            switch (map[i, j])
-            {
-                case CellState.empty:
-                    map[i, j] = CellState.missed;
-                    break;
-                case CellState.aura:
-                    map[i, j] = CellState.missed;
-                    break;
-                case CellState.busy:
-                    map[i, j] = CellState.striked;
-                    successShoot = true;
-
-                    int index = -1;
-                    for(int k = 0; k < units.Count; ++k)
-                    {
-                        foreach(ShipPoint p in units[k].body)
+                        int index = -1;
+                        for (int k = 0; k < units.Count; ++k)
                         {
-                            if(p.X == i && p.Y == j)
+                            foreach (ShipPoint p in units[k].body)
                             {
-                                index = k;
+                                if (p.X == i && p.Y == j)
+                                {
+                                    index = k;
+                                    break;
+                                }
+                            }
+                            if (index != -1)
+                            {
                                 break;
                             }
-                        }
-                        if(index != -1)
-                        {
-                            break;
+
                         }
 
-                    }
-
-                    if (index != -1)
-                    {
-                        bool killed = true;
-
-                        foreach (ShipPoint p in units[index].body)
+                        if (index != -1)
                         {
-                            if (map[p.X, p.Y] != CellState.striked)
-                            {
-                                killed = false;
-                                break;
-                            }
-                        }
+                            bool killed = true;
 
-                        if (killed)
-                        {
-                            
                             foreach (ShipPoint p in units[index].body)
                             {
-                                map[p.X, p.Y] = CellState.killed;
-
-                                if (map[p.X, p.Y] == CellState.killed)
+                                if (map[p.X, p.Y] != CellState.striked)
                                 {
-                                    if (p.X + 1 < 10)
-                                    {
-                                        if (map[p.X + 1, p.Y] == CellState.aura)
-                                            map[p.X + 1, p.Y] = CellState.missed;
-                                    }
-                                    if (j + 1 < 10)
-                                    {
-                                        if (map[p.X, p.Y + 1] == CellState.aura)
-                                            map[p.X, p.Y + 1] = CellState.missed;
-                                    }
-                                    if (p.X + 1 < 10 && p.Y + 1 < 10)
-                                    {
-                                        if (map[p.X + 1, p.Y + 1] == CellState.aura)
-                                            map[p.X + 1, p.Y + 1] = CellState.missed;
+                                    killed = false;
+                                    break;
+                                }
+                            }
 
-                                    }
+                            if (killed)
+                            {
 
-                                    if (p.Y - 1 >= 0)
+                                foreach (ShipPoint p in units[index].body)
+                                {
+                                    map[p.X, p.Y] = CellState.killed;
+
+                                    if (map[p.X, p.Y] == CellState.killed)
                                     {
-                                        if (map[p.X, p.Y - 1] == CellState.aura)
-                                            map[p.X, p.Y - 1] = CellState.missed;
-                                    }
-                                    if (p.X + 1 < 10 && p.Y - 1 >= 0)
-                                    {
+                                        if (p.X + 1 < 10)
+                                        {
+                                            if (map[p.X + 1, p.Y] == CellState.aura)
+                                                map[p.X + 1, p.Y] = CellState.missed;
+                                        }
+                                        if (j + 1 < 10)
+                                        {
+                                            if (map[p.X, p.Y + 1] == CellState.aura)
+                                                map[p.X, p.Y + 1] = CellState.missed;
+                                        }
+                                        if (p.X + 1 < 10 && p.Y + 1 < 10)
+                                        {
+                                            if (map[p.X + 1, p.Y + 1] == CellState.aura)
+                                                map[p.X + 1, p.Y + 1] = CellState.missed;
 
-                                        if (map[p.X + 1, p.Y - 1] == CellState.aura)
-                                            map[p.X + 1, p.Y - 1] = CellState.missed;
+                                        }
 
-                                    }
+                                        if (p.Y - 1 >= 0)
+                                        {
+                                            if (map[p.X, p.Y - 1] == CellState.aura)
+                                                map[p.X, p.Y - 1] = CellState.missed;
+                                        }
+                                        if (p.X + 1 < 10 && p.Y - 1 >= 0)
+                                        {
 
-                                    if (p.X - 1 >= 0 && j + 1 < 10)
-                                    {
-                                        if (map[p.X - 1, p.Y + 1] == CellState.aura)
-                                            map[p.X - 1, p.Y + 1] = CellState.missed;
+                                            if (map[p.X + 1, p.Y - 1] == CellState.aura)
+                                                map[p.X + 1, p.Y - 1] = CellState.missed;
 
-                                    }
-                                    if (p.X - 1 >= 0)
-                                    {
-                                        if (map[p.X - 1, p.Y] == CellState.aura)
-                                            map[p.X - 1, p.Y] = CellState.missed;
-                                    }
+                                        }
 
-                                    if (p.X - 1 >= 0 && p.Y - 1 >= 0)
-                                    {
-                                        if (map[p.X - 1, p.Y - 1] == CellState.aura)
-                                            map[p.X - 1, p.Y - 1] = CellState.missed;
+                                        if (p.X - 1 >= 0 && j + 1 < 10)
+                                        {
+                                            if (map[p.X - 1, p.Y + 1] == CellState.aura)
+                                                map[p.X - 1, p.Y + 1] = CellState.missed;
+
+                                        }
+                                        if (p.X - 1 >= 0)
+                                        {
+                                            if (map[p.X - 1, p.Y] == CellState.aura)
+                                                map[p.X - 1, p.Y] = CellState.missed;
+                                        }
+
+                                        if (p.X - 1 >= 0 && p.Y - 1 >= 0)
+                                        {
+                                            if (map[p.X - 1, p.Y - 1] == CellState.aura)
+                                                map[p.X - 1, p.Y - 1] = CellState.missed;
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
 
-                    break;
-                case CellState.striked:
-                    break;
-                case CellState.missed:
-                    break;
-                case CellState.killed:
-                    break;
-                default:
-                    break;
-            }
+                        break;
+                    case CellState.striked:
+                        break;
+                    case CellState.missed:
+                        break;
+                    case CellState.killed:
+                        break;
+                    default:
+                        break;
+                }
 
+                
+                
+            
             invoker.Invoke(map);
             return successShoot;
         }
